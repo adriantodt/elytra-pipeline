@@ -21,19 +21,26 @@ public abstract class PlayerEntityMixin extends LivingEntityMixin {
      */
     @Overwrite
     public boolean checkFallFlying() {
-        // This method is called only on the first time the player tries to fly.
-        // Starting conditions are checked here. If we're able to fly, enables the flag.
-        // TODO maybe turn this into a @Redirect or @Inject?
-        // Maybe letting @Overwrite would make people understand that mixins is not the path.
-        if (meetFallFlyingStartConditions() && this.canElytraFly()) { // canElytraFly is from parent mixin.
+        /*
+         * This function is marked as @Overwrite. It might be possible to replicate this by using a @Redirect or a
+         * cancellable @Inject, avoiding the use of an @Overwrite mixin.
+         * TODO possibly turn PlayerEntityMixin#checkFallFlying into a @Redirect or @Inject?
+         * CAVEAT: Maybe letting @Overwrite would make people understand that mixins is not the path.
+         * Contractually, this method is called only on the first time the player tries to fly.
+         */
+        if (meetFallFlyingStartConditions() && this.canElytraFly()) { // this.canElytraFly is from parent mixin.
             this.startFallFlying();
             return true;
         }
-
         return false;
     }
 
     private boolean meetFallFlyingStartConditions() {
+        /*
+         * Currently, this function mimics Minecraft's default code.
+         * TODO should we add support for more conditions? Uses include dimensions which does not feature air (space), etc.
+         *
+         */
         // "Start" conditions are different from "continue" conditions.
         // TODO A way to add more conditions?
         return !this.isFallFlying()

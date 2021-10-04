@@ -28,10 +28,18 @@ public abstract class LivingEntityMixin extends Entity {
      */
     @Overwrite
     private void tickFallFlying() {
-        // TODO maybe turn this into a @Redirect or @Inject?
-        // Maybe letting @Overwrite would make people understand that mixins is not the path.
+        /*
+         * This function is marked as @Overwrite. It might be possible to replicate this by using a @Redirect or a
+         * cancellable @Inject, avoiding the use of an @Overwrite mixin.
+         * TODO possibly turn LivingEntityMixin#tickFallFlying into a @Redirect or @Inject?
+         * CAVEAT: Maybe letting @Overwrite would make people understand that mixins is not the path.
+         * This function is a re-implementation of Minecraft's code, accounting for custom fall-flying sources.
+         */
         boolean fallFlyingFlag = this.getFlag(Entity.FALL_FLYING_FLAG_INDEX);
-        // TODO investigate if this checks could be server-side only.
+        /*
+         * It might be possible to make this function server-side only.
+         * TODO investigate if LivingEntityMixin#tickFallFlying can be turned server-side only.
+         */
         if (!fallFlyingFlag || !checkFallFlyingConditions() || !canElytraFly()) {
             fallFlyingFlag = false;
         }
@@ -42,12 +50,21 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     public boolean canElytraFly() {
-        // FIXME this is a stub.
+        /*
+         * This function exists mainly for development readability, and might be inlined later.
+         * TODO possibly inline LivingEntityMixin#canElytraFly function later.
+         * This function is currently a stub, and returns true for debug purposes.
+         * FIXME LivingEntityMixin#canElytraFly function is a stub.
+         */
         return true;
     }
 
     protected boolean checkFallFlyingConditions() {
-        // TODO A way to add more conditions?
+        /*
+         * Currently, this function mimics Minecraft's default code.
+         * TODO should we add support for more common conditions? Uses include a curse, status effect, etc.
+         * (For client-side conditions, check ClientPlayerEntityMixin#canClientStartFallFlying.
+         */
         return !this.onGround
             && !this.hasVehicle()
             && !this.hasStatusEffect(StatusEffects.LEVITATION);

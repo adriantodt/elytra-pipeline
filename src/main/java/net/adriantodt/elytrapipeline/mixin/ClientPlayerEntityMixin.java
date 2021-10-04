@@ -35,7 +35,9 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntityMixin {
         method = "tickMovement"
     )
     public void patchClientControls(CallbackInfo info) {
-        // This function re-implements the "pipeline" code for handling the client control to start fall flying.
+        /*
+         * This function re-implements the "pipeline" code for handling the client control to start fall flying.
+         */
         if (canClientStartFallFlying()) {
             sendStartFallFlyingPacket();
         }
@@ -49,18 +51,29 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntityMixin {
         method = "tickMovement"
     )
     public boolean disableVanillaElytraCode(ItemStack stack) {
-        // FIXME still keep vanilla Elytra code-path disabled? (Yes if Elytra is implemented through Fabric)
+        /*
+         * This function exists to disable the vanilla Elytra check-and-enable path.
+         * FIXME are we keeping Minecraft's Elytra check-and-enable path or re-enabling it?
+         */
         return false;
     }
 
     private void sendStartFallFlyingPacket() {
-        // This function exists for development readability.
-        // TODO inline this function later
+        /*
+         * This function exists solely for development readability, and can be inlined.
+         * FIXME inline ClientPlayerEntityMixin#sendStartFallFlyingPacket function later.
+         */
         this.networkHandler.sendPacket(new ClientCommandC2SPacket(this, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
     }
 
     private boolean canClientStartFallFlying() {
-        // TODO can more conditions be added? Eg. a lock keybind or a curse
-        return this.checkFallFlying();
+        /*
+         * This function exists mainly for development readability, and might be inlined later.
+         * TODO possibly inline ClientPlayerEntityMixin#canClientStartFallFlying function later.
+         * Currently, this function mimics Minecraft's default code.
+         * Contractually, this function must return false OR this.checkFallFlying's return value.
+         * TODO should we add support for more client-level pre-conditions? Uses include a lock keybind, a curse, status effect, etc.
+         */
+        return /* true && */ this.checkFallFlying();
     }
 }
