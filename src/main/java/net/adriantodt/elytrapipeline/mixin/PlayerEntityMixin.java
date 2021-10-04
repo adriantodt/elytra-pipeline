@@ -39,10 +39,7 @@ public abstract class PlayerEntityMixin extends LivingEntityMixin {
         /*
          * Currently, this function mimics Minecraft's default code.
          * TODO should we add support for more conditions? Uses include dimensions which does not feature air (space), etc.
-         *
          */
-        // "Start" conditions are different from "continue" conditions.
-        // TODO A way to add more conditions?
         return !this.isFallFlying()
             && !this.isTouchingWater()
             && this.checkFallFlyingConditions();
