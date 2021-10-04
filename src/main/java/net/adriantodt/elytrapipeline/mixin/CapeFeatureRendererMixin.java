@@ -25,7 +25,7 @@ public class CapeFeatureRendererMixin {
         AbstractClientPlayerEntity abstractClientPlayerEntity, float f, float g, float h, float j, float k, float l,
         CallbackInfo callbackInfo
     ) {
-        if (AllowCapeRenderCallback.EVENT.invoker().canRenderCape(abstractClientPlayerEntity)) {
+        if (!AllowCapeRenderCallback.EVENT.invoker().canRenderCape(abstractClientPlayerEntity)) {
             callbackInfo.cancel();
         }
     }
