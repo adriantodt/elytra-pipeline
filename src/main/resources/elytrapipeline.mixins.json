@@ -1,16 +1,17 @@
 {
-  "required": true,
-  "minVersion": "0.8",
-  "package": "net.adriantodt.elytrapipeline.mixin",
-  "compatibilityLevel": "JAVA_16",
-  "mixins": [
-    "LivingEntityMixin",
-    "PlayerEntityMixin"
-  ],
-  "client": [
-    "ClientPlayerEntityMixin"
-  ],
-  "injectors": {
-    "defaultRequire": 1
-  }
+    "required": true,
+    "minVersion": "0.8",
+    "package": "net.adriantodt.elytrapipeline.mixin",
+    "compatibilityLevel": "JAVA_16",
+    "mixins": [
+        "LivingEntityMixin",
+        "PlayerEntityMixin"
+    ],
+    "client": [
+        "CapeFeatureRendererMixin",
+        "ClientPlayerEntityMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
 }
