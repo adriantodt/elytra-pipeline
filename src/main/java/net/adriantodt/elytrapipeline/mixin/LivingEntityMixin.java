@@ -1,10 +1,10 @@
 package net.adriantodt.elytrapipeline.mixin;
 
+import net.adriantodt.elytrapipeline.api.FallFlyingEventCallback;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -53,20 +53,12 @@ public abstract class LivingEntityMixin extends Entity {
         /*
          * This function exists mainly for development readability, and might be inlined later.
          * TODO possibly inline LivingEntityMixin#canElytraFly function later.
-         * This function is currently a stub, and returns true for debug purposes.
-         * FIXME LivingEntityMixin#canElytraFly function is a stub.
          */
-        return true;
+        return FallFlyingEventCallback.FLIGHT_SOURCES.invoker().canFallFly((LivingEntity) (Object) this);
     }
 
     protected boolean checkFallFlyingConditions() {
-        /*
-         * Currently, this function mimics Minecraft's default code.
-         * TODO should we add support for more common conditions? Uses include a curse, status effect, etc.
-         * (For client-side conditions, check ClientPlayerEntityMixin#canClientStartFallFlying.
-         */
-        return !this.onGround
-            && !this.hasVehicle()
-            && !this.hasStatusEffect(StatusEffects.LEVITATION);
+        return FallFlyingEventCallback.FLIGHT_CONDITIONS.invoker().canFallFly((LivingEntity) (Object) this)
+            || FallFlyingEventCallback.FLIGHT_CONDITIONS_OVERRIDE.invoker().canFallFly((LivingEntity) (Object) this);
     }
 }

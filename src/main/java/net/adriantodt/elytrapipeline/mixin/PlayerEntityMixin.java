@@ -1,5 +1,6 @@
 package net.adriantodt.elytrapipeline.mixin;
 
+import net.adriantodt.elytrapipeline.api.FallFlyingEventCallback;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
@@ -36,12 +37,7 @@ public abstract class PlayerEntityMixin extends LivingEntityMixin {
     }
 
     private boolean meetFallFlyingStartConditions() {
-        /*
-         * Currently, this function mimics Minecraft's default code.
-         * TODO should we add support for more conditions? Uses include dimensions which does not feature air (space), etc.
-         */
-        return !this.isFallFlying()
-            && !this.isTouchingWater()
+        return FallFlyingEventCallback.FLIGHT_START_CONDITIONS.invoker().canFallFly((PlayerEntity) (Object) this)
             && this.checkFallFlyingConditions();
     }
 }
